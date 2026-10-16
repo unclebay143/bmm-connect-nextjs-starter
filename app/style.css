@@ -1,0 +1,136 @@
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #35291f;
+  background: #faf7ef;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 780px;
+  margin: auto;
+  padding: 64px 24px;
+}
+h1 {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.06;
+  margin: 20px 0;
+}
+h2 {
+  font-size: 1.3rem;
+  letter-spacing: -0.025em;
+  margin: 0 0 16px;
+}
+p,
+li {
+  line-height: 1.65;
+}
+a {
+  color: inherit;
+}
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #806a54;
+}
+.intro {
+  font-size: 1.1rem;
+  color: #6f6258;
+}
+.demo,
+.hint {
+  font-size: 0.85rem;
+  color: #766b61;
+}
+.demo {
+  border-left: 3px solid #ddc8a0;
+  padding-left: 14px;
+  margin: 24px 0;
+}
+section {
+  background: #fffdf7;
+  border: 1px solid #e5dccb;
+  border-radius: 24px;
+  padding: 30px;
+  margin: 22px 0;
+}
+button,
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border: 1px solid #d4af5b;
+  border-radius: 12px;
+  background: #ffcf70;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.secondary {
+  background: transparent;
+  border-color: #d6cab8;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #805414;
+  outline-offset: 4px;
+}
+.badge {
+  float: right;
+  border-radius: 20px;
+  background: #e6eedc;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+}
+.notice {
+  border: 1px solid #dcc89e;
+  background: #fff4d8;
+  padding: 18px;
+  border-radius: 14px;
+}
+.currencies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+}
+.currencies > div {
+  border-top: 1px solid #e5dccb;
+}
+.currencies strong {
+  font-size: 1.8rem;
+}
+.footer {
+  display: block;
+  font-size: 0.85rem;
+  margin: 30px 0;
+}
+ol {
+  padding-left: 22px;
+  margin: 20px 0 24px;
+}
+li {
+  margin: 10px 0;
+}
+@media (max-width: 480px) {
+  main {
+    padding: 32px 18px;
+  }
+  section {
+    padding: 22px;
+  }
+  .badge {
+    float: none;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+}
