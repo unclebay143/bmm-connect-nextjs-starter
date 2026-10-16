@@ -11,28 +11,20 @@ export default async function Support() {
   }
   return (
     <main>
-      <Link href="/">← Back to your connection</Link>
+      <Link href="/">← Your connection</Link>
       {data?.creator.support_url ? (
         <section>
+          <p className="eyebrow">
+            {data.creator.environment === "sandbox"
+              ? "Sandbox support"
+              : "Live support"}
+          </p>
           <h1>
-            Open the{" "}
-            {data.creator.environment === "sandbox" ? "sandbox" : "live"} BMM
-            support page?
+            Buy {data.creator.display_name || data.creator.username} a malt.
           </h1>
           <p>
-            You’re about to open{" "}
-            {data.creator.display_name || data.creator.username}’s BMM profile
-            to buy them a malt.
-          </p>
-          <p>
-            When a payment through this link is successfully verified, BMM
-            attributes it to this partner application. The creator receives the
-            support; attribution does not transfer their earnings to the
-            partner.
-          </p>
-          <p className="hint">
-            BMM handles checkout and payments. Opening the page does not charge
-            you. You can switch back to your game or platform tab at any time.
+            You’ll continue to their BMM page. Verified payments are attributed
+            to this application; the creator receives the support.
           </p>
           <a
             className="button"
@@ -41,28 +33,18 @@ export default async function Support() {
           >
             Continue to BMM ↗
           </a>
-        </section>
-      ) : data ? (
-        <section>
-          <h1>No payment link for this connection</h1>
-          <p>
-            Your connection is active, but its environment does not match this
-            BMM deployment’s payment environment. Sandbox connections cannot
-            open live checkout.
-          </p>
-          <Link className="button" href="/">
-            Back to your connection
-          </Link>
+          <p className="hint">Your game stays open in its original tab.</p>
         </section>
       ) : (
         <section>
-          <h1>Connect BMM first</h1>
+          <h1>{data ? "No payment link yet." : "Connect BMM first."}</h1>
           <p>
-            A current creator connection is required to open an attributed
-            support page.
+            {data
+              ? "This connection is for testing in a different payment environment."
+              : "Connect an account to get its support link."}
           </p>
           <Link className="button" href="/">
-            Back to Connect BMM
+            Back to your connection
           </Link>
         </section>
       )}

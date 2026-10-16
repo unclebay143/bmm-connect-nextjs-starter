@@ -134,3 +134,34 @@ li {
     margin-bottom: 16px;
   }
 }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.actions form {
+  margin: 0;
+}
+.actions .button,
+.actions button {
+  margin: 0;
+}
+.example-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  font-size: 14px;
+}
+.example-note {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #796b60;
+}
+.example-note summary {
+  cursor: pointer;
+}

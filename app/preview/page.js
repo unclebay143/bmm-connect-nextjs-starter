@@ -20,10 +20,9 @@ export default async function Preview() {
     <main>
       <Link href="/">← Back to Connect BMM</Link>
       <p className="eyebrow">Optional preview · Sample data</p>
-      <h1>Explore the API responses</h1>
+      <h1>Sample data preview</h1>
       <p className="intro">
-        This fictional creator has no live profile or payment link. Connect your
-        own account to try the real support journey.
+        A fictional profile and earnings. No payments or real connection.
       </p>
       {message && (
         <p role="status" className="notice">

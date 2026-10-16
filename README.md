@@ -23,7 +23,7 @@ cd bmm-connect-nextjs-starter
 2. Download and extract the starter, or clone it as shown above. Copy the approved environment configuration from Developers into `.env.local`, replacing the API-key placeholder. There is no need to ask BMM for a separate sandbox origin.
 3. With Node.js 22.13 or later, run `npm install` and `npm run dev`. Open `http://localhost:3090` (use the exact host you registered).
 4. Click **Connect BMM**, sign in/register on BMM and choose permissions. Return to your connected profile. Click **Buy me a malt** to open a new tab with the notice, then continue to the attributed BMM support page in that tab. The original game/platform tab stays open; checkout keeps its existing BMM return flow.
-5. Disconnect here or in BMM → Connected Apps. Later reads stop working immediately after revocation.
+5. Disconnect here or in BMM → Developers → Connected apps. Later reads stop working immediately after revocation.
 
 `BMM_ORIGIN`, `BMM_CLIENT_ID`, `BMM_API_KEY`, `APP_ORIGIN` and `BMM_REDIRECT_URI` are required. `BMM_DEMO_TOKEN` is optional and enables only Sample data preview. All secrets are server-only; never use `NEXT_PUBLIC_`.
 
@@ -47,7 +47,7 @@ The token expires after seven days. Generating another replaces the previous tok
 
 ## Connect your own user session
 
-The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Connected Apps.
+The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Developers → Connected apps.
 
 Replace `getPartnerUserId` with your platform's existing authenticated session:
 

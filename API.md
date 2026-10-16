@@ -25,7 +25,7 @@ Register your application in Developers, obtain its credentials after approval, 
 3. Approve read-only profile access. Sharing settled earnings is optional and initially unchecked.
 4. Return to your platform with their attributed support link ready to use.
 
-Creators can disconnect at any time, either on your platform or in BMM → Connected Apps.
+Creators can disconnect at any time, either on your platform or in BMM → Developers → Connected apps.
 
 ## Optional quick start: run the Next.js example
 
@@ -272,7 +272,7 @@ curl -X DELETE "$BMM_ORIGIN/api/connect/v1/me" \
 { "disconnected": true }
 ```
 
-Revoke remotely before deleting local credentials. Retry transient failures; do not show a successful remote disconnect merely because you cleared your database. Creators can always revoke through BMM → Connected Apps. A revoked connection invalidates its API access and attributed support link; it does not delete the account or financial history. Reconnecting creates a new grant and source; old credentials never reactivate. Existing provider checkouts may settle after disconnection and retain their original attribution. Recovery checkouts require an active connection.
+Revoke remotely before deleting local credentials. Retry transient failures; do not show a successful remote disconnect merely because you cleared your database. Creators can always revoke through BMM → Developers → Connected apps. A revoked connection invalidates its API access and attributed support link; it does not delete the account or financial history. Reconnecting creates a new grant and source; old credentials never reactivate. Existing provider checkouts may settle after disconnection and retain their original attribution. Recovery checkouts require an active connection.
 
 ## Errors and recovery
 
@@ -364,7 +364,7 @@ Use the **Live** and **Sandbox** tabs in Developers, then **Add application** fo
 
 Register up to **10 exact callback URLs**, one per line. Live URLs require HTTPS. Sandbox additionally allows HTTP on `localhost` and `127.0.0.1`. Wildcards, URL fragments, embedded credentials and duplicate callbacks are rejected. Choose one approved callback in the copyable starter configuration; authorization requests must match it exactly. Callback changes use the existing admin review workflow.
 
-Both tabs use the displayed BMM origin. The client ID determines the Connect environment; do not add an environment override to API requests. Approval and token exchange work for both environments on the same deployment. Creators see the environment during consent and can revoke either environment in Connected Apps.
+Both tabs use the displayed BMM origin. The client ID determines the Connect environment; do not add an environment override to API requests. Approval and token exchange work for both environments on the same deployment. Creators see the environment during consent and can revoke either environment in Developers → Connected apps.
 
 The real creator response includes `environment: "live"` or `"sandbox"`. Earnings queries return only payments attributed to that exact application and environment, never another game's or environment's records. `profile_url` and `support_url` are `null` when the connection environment does not match the deployment's payment environment. In particular, Sandbox applications on a live-payment deployment cannot open live checkout, even if someone constructs a URL using their attribution reference. Sandbox connection testing is available immediately after approval; simulated payments still require a deployment configured with Bachs sandbox credentials. Empty sandbox earnings are not populated with fictional payment records.
 

@@ -6,14 +6,12 @@ export default function Earnings({ support, preview = false }) {
   return (
     <section>
       <h2>
-        {preview
-          ? "Sample settled earnings"
-          : "Support received through this application"}
+        {preview ? "Sample settled earnings" : "Support through this app"}
       </h2>
       <p className="hint">
         {preview
-          ? "Fictional amounts, separate from real earnings and payments."
-          : "Settled earnings after fees and refund deductions. This is not a withdrawable balance."}
+          ? "Fictional amounts. No real payments."
+          : "Settled earnings, after fees and refunds. Not a withdrawable balance."}
       </p>
       {support ? (
         <div className="currencies">
@@ -24,8 +22,8 @@ export default function Earnings({ support, preview = false }) {
                 {money[row.currency]?.format(row.settled_earnings_minor / 100)}
               </strong>
               <p className="hint">
-                {row.verified_payment_count}{" "}
-                {preview ? "sample payments" : "verified payments"}
+                {row.verified_payment_count} {preview ? "sample" : "verified"}{" "}
+                {row.verified_payment_count === 1 ? "payment" : "payments"}
               </p>
             </div>
           ))}
