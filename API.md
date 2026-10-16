@@ -45,7 +45,7 @@ cd bmm-connect-nextjs-starter
 
 The repository is private while we finish the integration. Your GitHub account needs repository access; BMM application approval alone does not grant that access. Use the dashboard download if you do not have GitHub access. Next.js remains an optional example, not an API requirement.
 
-Click **Sample data preview** in the starter to display a local fictional profile and earnings. No token or API credentials are needed. This separate preview never replaces consent, changes a real connection or provides a payment link.
+Use Sandbox to test the complete account connection and consent flow.
 
 The example includes the hosted Connect SDK, secure callback verification, earnings permissions, disconnect and error states. BMM stores connections; partners do not manage access or refresh tokens. It is a standalone Next.js app, not a mock. Its browser session represents the demo user; bind it to your existing platform identity before real multi-user use.
 
@@ -143,7 +143,7 @@ Scopes are `profile:read`, optional `support:read`, and `offline_access`. The au
 
 All paths below are relative to `BMM_ORIGIN`. Replace example placeholders with your approved application credentials on your server. Example payload values are illustrative, not usable credentials. Do not paste real secrets into shared terminals, logs or tickets. The five public operations below are the partner API; BMM’s `/api/connect/profile`, `/consent`, `/connections`, and admin/developer management routes are first-party UI endpoints, not partner APIs.
 
-### 1. GET /api/connect/authorize — connect an account
+### 1. GET /api/connect/authorize: connect an account
 
 Generate a random state and PKCE verifier for every attempt, save them against the initiating user **and browser session** on your server, and redirect the browser to BMM. The S256 challenge is the base64url-encoded SHA-256 digest of the verifier.
 
@@ -170,7 +170,7 @@ http://localhost:3090/api/bmm/callback?code=ONE_TIME_CODE&state=ORIGINAL_STATE&i
 
 Denial returns the callback with `error=access_denied` and the original `state`. Validate state before treating denial as a valid outcome. Before exchanging a successful code, require the exact issuer **`BMM_ORIGIN/api/auth`**, not just the origin. Atomically consume the pending request. Codes expire after ten minutes and can be redeemed only once. Exact callback matching and S256 PKCE are mandatory. Never bypass state if the user changed browser/device; ask them to restart.
 
-### 2. POST /api/connect/token — exchange or refresh
+### 2. POST /api/connect/token: exchange or refresh
 
 Use `application/x-www-form-urlencoded`, not JSON. Exchange on your server:
 
@@ -208,7 +208,7 @@ curl "$BMM_ORIGIN/api/connect/token" \
 
 Refresh returns the token response shape above. Serialize refreshes per connection and atomically store the replacement access **and refresh** tokens. Replaying an old code or refresh token can invalidate associated credentials. After an uncertain refresh outcome (timeout/crash after sending), reconnect rather than blindly replaying the old refresh token.
 
-### 3. GET /api/connect/v1/me — profile and attributed support link
+### 3. GET /api/connect/v1/me: profile and attributed support link
 
 ```sh
 curl "$BMM_ORIGIN/api/connect/v1/me" \
@@ -233,7 +233,7 @@ curl "$BMM_ORIGIN/api/connect/v1/me" \
 
 Use `id` as the BMM identity; usernames can change. Render the returned `support_url` without rebuilding it or replacing `source` with your application ID. The opaque public source identifies this approved partner/creator connection, cannot read data, and is checked again at checkout. Shared copies retain attribution; direct profile visits are unattributed. Username redirects retain the source. Group checkout attribution is outside Connect’s current scope.
 
-### 4. GET /api/connect/v1/me/support — optional earnings
+### 4. GET /api/connect/v1/me/support: optional earnings
 
 ```sh
 curl "$BMM_ORIGIN/api/connect/v1/me/support" \
@@ -259,7 +259,7 @@ BMM uses existing verified credit after fees, minus its refund deductions. Pendi
 
 The endpoint requires both `support:read` and current earnings consent, including for payment counts. A 403 means hide earnings/counts, not “zero earnings”. Keep the profile and support button available.
 
-### 5. DELETE /api/connect/v1/me — disconnect
+### 5. DELETE /api/connect/v1/me: disconnect
 
 ```sh
 curl -X DELETE "$BMM_ORIGIN/api/connect/v1/me" \
@@ -313,14 +313,6 @@ For a safe local walkthrough, use a dedicated BMM process and **`buymeamalt_test
 
 Run the starter’s SDK tests and production build, the BMM integration suite, and `scripts/test-connect-starter.mjs` against the two local test servers. Hosted tests cover consent, account binding, callback tampering, replay, isolation, permissions and revocation without payments. Payment settlement testing remains separate. No deployment is authorized by these checks.
 
-## Local sample data preview
-
-Open the starter’s **Sample data preview** link or visit `/preview`. It reads fictional data from `lib/sample-data.mjs` and works without application approval, environment variables, an API key or a preview token. Edit that file to try different display values.
-
-The sample contains a fictional creator with no profile or support URL and settled earnings of ₦12,500 and $45, expressed in minor units. It makes no BMM API requests, writes no database records and cannot accept payments. It never replaces or changes a real connection.
-
-Use Sandbox to test authentication and explicit consent. Local sample data only demonstrates the UI; it does not test API access, attribution or settlement. Connect BMM remains the main starter flow. Remove any old `BMM_DEMO_TOKEN` environment setting; the starter no longer reads it. Existing server-issued preview tokens retain their existing expiry/revocation behaviour for compatibility, but are not used by this preview.
-
 ## Update your website or callback
 
 Approved, active applications can use **Developers → Edit website & callback** to submit new URLs for admin review. Your existing URLs, API key and creator connections remain active while the request is pending. Only one URL request can be pending at a time.
@@ -338,10 +330,10 @@ Both tabs use the displayed BMM origin. The client ID determines the Connect env
 
 The real creator response includes `environment: "live"` or `"sandbox"`. Earnings queries return only payments attributed to that exact application and environment, never another game's or environment's records. `profile_url` and `support_url` are `null` when the connection environment does not match the deployment's payment environment. In particular, Sandbox applications on a live-payment deployment cannot open live checkout, even if someone constructs a URL using their attribution reference. Sandbox connection testing is available immediately after approval; simulated payments still require a deployment configured with Bachs sandbox credentials. Empty sandbox earnings are not populated with fictional payment records.
 
-**Sample data preview** is a local starter option, separate from Live and Sandbox connections. It needs no credentials and has no profile or payment destination.
-
 ## Archive an application
 
 In Developers, select the application's Live or Sandbox tab, choose the application, and select **Archive application**. Confirm the displayed name and environment. Archiving immediately disables its credentials and sample access, revokes its OAuth and hosted creator connections, invalidates unfinished connection attempts and stops its attributed support links. Other applications are unaffected.
 
-The application disappears from the active dashboard. Existing payments and earnings attribution records remain intact; archiving does not change creator balances or withdrawals. The application, credentials and connection records are retained for history, with access disabled. Registering the same name again creates a fresh application requiring approval, new credentials and new creator consent.
+Archived applications remain visible as inactive rows with an Archived badge. Open View archived and confirm Unarchive application to restore the previous approval state. Prior admin suspensions remain in force. Older archives without saved suspension state remain disabled until an admin reviews them. Creators must reconnect; revoked permissions, old support links and unfinished attempts are never restored.
+
+Existing payments and earnings attribution records remain intact; archiving does not change creator balances or withdrawals. The application, credentials and connection records are retained for history. If another active application uses the same name in the same environment, archive that application before restoring the original.

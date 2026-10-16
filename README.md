@@ -1,4 +1,4 @@
-# BMM Connect — Next.js starter
+# BMM Connect: Next.js starter
 
 Connect a creator's BMM account to your platform, display their attributed support link, and optionally show earnings generated through your application. BMM handles sign-in, registration, consent, payments and withdrawals.
 
@@ -19,19 +19,58 @@ cd bmm-connect-nextjs-starter
 
 ## Run locally
 
-1. In BMM Developers → Sandbox, register an application with website `http://localhost:3090` and callback `http://localhost:3090/api/bmm/callback`. Live apps require HTTPS. Wait for approval, then generate your application API key.
-2. Download and extract the starter, or clone it as shown above. Copy the approved environment configuration from Developers into `.env.local`, replacing the API-key placeholder. There is no need to ask BMM for a separate sandbox origin.
-3. With Node.js 22.13 or later, run `npm install` and `npm run dev`. Open `http://localhost:3090` (use the exact host you registered).
-4. Click **Connect BMM**, sign in/register on BMM and choose permissions. Return to your connected profile. Click **Buy me a malt** to open a new tab with the notice, then continue to the attributed BMM support page in that tab. The original game/platform tab stays open; checkout keeps its existing BMM return flow.
-5. Disconnect here or in BMM → Developers (Connected badge). Later reads stop working immediately after revocation.
+### 1. Register your application
 
-`BMM_ORIGIN`, `BMM_CLIENT_ID`, `BMM_API_KEY`, `APP_ORIGIN` and `BMM_REDIRECT_URI` are required. All secrets are server-only; never use `NEXT_PUBLIC_`.
+In **BMM → Developers → Sandbox**, register these URLs:
 
-## Optional: local sample data
+```text
+Website: http://localhost:3090
+Callback: http://localhost:3090/api/bmm/callback
+```
 
-Run `npm install` and `npm run dev`, then open `http://localhost:3090/preview` or choose **Sample data preview** on the homepage. The preview works without `.env.local`, application approval, an API key or a token. Real connections still require the configuration above.
+Wait for approval, then generate your application API key. Live applications require HTTPS.
 
-Edit `lib/sample-data.mjs` to try different fictional profiles and earnings. This page makes no BMM API requests, changes no connection records and has no payment link. It does not test authentication, consent, attribution or settlement; use Sandbox for the real connection flow. Any old `BMM_DEMO_TOKEN` setting can be removed.
+### 2. Configure the starter
+
+Use Node.js 22.13 or later. In the starter folder, create your local configuration:
+
+```sh
+cp .env.example .env.local
+```
+
+Copy the approved environment configuration from **Developers → Manage** into `.env.local`. Replace the API-key placeholder with your generated key:
+
+```dotenv
+# Use the BMM origin shown in Developers.
+BMM_ORIGIN=https://your-bmm-origin.example
+BMM_CLIENT_ID=your-approved-client-id
+BMM_API_KEY=your-generated-api-key
+APP_ORIGIN=http://localhost:3090
+BMM_REDIRECT_URI=http://localhost:3090/api/bmm/callback
+```
+
+All five settings are required. Keep credentials server-side and never prefix them with `NEXT_PUBLIC_`. You do not need to request a separate sandbox origin.
+
+`BMM_DEMO_TOKEN` is obsolete and is not read by this starter. Remove it from older configurations. No command or extra secret is needed to generate it.
+
+### 3. Install and run
+
+```sh
+npm install
+npm run dev
+```
+
+Open [http://localhost:3090](http://localhost:3090) using the exact host registered above.
+
+### 4. Try the connection
+
+1. Click **Connect BMM**.
+2. Sign in or register on BMM, then approve access and choose whether to share earnings.
+3. Return to the starter to see the connected profile.
+4. Click **Buy me a malt** when a support link is available. It opens the support notice and attributed BMM profile in a new tab, keeping your platform open.
+5. Disconnect in the starter or in **BMM → Developers**. Further authorised reads stop immediately.
+
+The starter uses real connections only. Test with a Sandbox application; it does not include a fictional preview page.
 
 ## Connect your own user session
 
@@ -63,8 +102,13 @@ A creator can have one active hosted account mapping per application. Completing
 
 The API key authenticates your application. BMM's saved consent authorises profile access and optional earnings. Your server is trusted to identify the partner user; never expose credentials or an unauthenticated arbitrary-user lookup. Earnings 403 means not shared, not zero. Amounts are integer minor units and each currency is displayed separately. Refund deductions are already included by BMM. Withdrawals do not reduce these lifetime integration-specific earnings.
 
-Sandbox connections cannot open live checkout on a live-payment BMM deployment; in that case support URLs are null. Sample data preview is separate, contains fixed fictional earnings, and cannot take payments. No payment or withdrawal code runs in this starter.
+Sandbox connections cannot open live checkout on a live-payment BMM deployment; in that case support URLs are null. No payment or withdrawal code runs in this starter.
 
 ## Validate
 
-Run `npm test` and `npm run build`. Manually verify connect, denial, optional earnings, disconnect from both sides, stale callbacks and a changed partner login. Read `API.md` for copyable hosted requests and the backwards-compatible OAuth reference.
+```sh
+npm test
+npm run build
+```
+
+Manually verify connect, denial, optional earnings, disconnect from both sides, stale callbacks and a changed partner login. Read `API.md` for copyable hosted requests and the backwards-compatible OAuth reference.

@@ -85,7 +85,6 @@ export default async function Page({ searchParams }) {
         </section>
       )}
       <footer className="example-footer">
-        <Link href="/preview">Sample data preview →</Link>
         {bmmOrigin && (
           <a
             href={`${bmmOrigin}/dashboard/developers?view=connections`}
