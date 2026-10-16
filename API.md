@@ -25,7 +25,7 @@ Register your application in Developers, obtain its credentials after approval, 
 3. Approve read-only profile access. Sharing settled earnings is optional and initially unchecked.
 4. Return to your platform with their attributed support link ready to use.
 
-Creators can disconnect at any time, either on your platform or in BMM → Developers → Connected apps.
+Creators can disconnect at any time, either on your platform or in BMM → Developers (Connected badge).
 
 ## Optional quick start: run the Next.js example
 
@@ -45,7 +45,7 @@ cd bmm-connect-nextjs-starter
 
 The repository is private while we finish the integration. Your GitHub account needs repository access; BMM application approval alone does not grant that access. Use the dashboard download if you do not have GitHub access. Next.js remains an optional example, not an API requirement.
 
-Optionally set `BMM_DEMO_TOKEN` and click **Preview sample data** to query a fictional profile and earnings. This separate preview never replaces consent, changes a real connection or provides a payment link.
+Click **Sample data preview** in the starter to display a local fictional profile and earnings. No token or API credentials are needed. This separate preview never replaces consent, changes a real connection or provides a payment link.
 
 The example includes the hosted Connect SDK, secure callback verification, earnings permissions, disconnect and error states. BMM stores connections; partners do not manage access or refresh tokens. It is a standalone Next.js app, not a mock. Its browser session represents the demo user; bind it to your existing platform identity before real multi-user use.
 
@@ -272,7 +272,7 @@ curl -X DELETE "$BMM_ORIGIN/api/connect/v1/me" \
 { "disconnected": true }
 ```
 
-Revoke remotely before deleting local credentials. Retry transient failures; do not show a successful remote disconnect merely because you cleared your database. Creators can always revoke through BMM → Developers → Connected apps. A revoked connection invalidates its API access and attributed support link; it does not delete the account or financial history. Reconnecting creates a new grant and source; old credentials never reactivate. Existing provider checkouts may settle after disconnection and retain their original attribution. Recovery checkouts require an active connection.
+Revoke remotely before deleting local credentials. Retry transient failures; do not show a successful remote disconnect merely because you cleared your database. Creators can always revoke through BMM → Developers (Connected badge). A revoked connection invalidates its API access and attributed support link; it does not delete the account or financial history. Reconnecting creates a new grant and source; old credentials never reactivate. Existing provider checkouts may settle after disconnection and retain their original attribution. Recovery checkouts require an active connection.
 
 ## Errors and recovery
 
@@ -313,43 +313,13 @@ For a safe local walkthrough, use a dedicated BMM process and **`buymeamalt_test
 
 Run the starter’s SDK tests and production build, the BMM integration suite, and `scripts/test-connect-starter.mjs` against the two local test servers. Hosted tests cover consent, account binding, callback tampering, replay, isolation, permissions and revocation without payments. Payment settlement testing remains separate. No deployment is authorized by these checks.
 
-## Sample data preview: query sample data without a sandbox
+## Local sample data preview
 
-Once your application is approved, open **Developers → Sample data preview** and generate a preview token. Generate your application API key first if you have not already done so. Preview tokens expire after seven days; generating a new one immediately replaces the previous one. The token is shown only when generated. Revoke it from Developers or with `DELETE /api/connect/v1/me`.
+Open the starter’s **Sample data preview** link or visit `/preview`. It reads fictional data from `lib/sample-data.mjs` and works without application approval, environment variables, an API key or a preview token. Edit that file to try different display values.
 
-Use the same BMM origin and your application's current credentials:
+The sample contains a fictional creator with no profile or support URL and settled earnings of ₦12,500 and $45, expressed in minor units. It makes no BMM API requests, writes no database records and cannot accept payments. It never replaces or changes a real connection.
 
-```sh
-curl "$BMM_ORIGIN/api/connect/v1/me" \
-  -H "Authorization: Bearer $BMM_DEMO_TOKEN" \
-  -H "X-BMM-Client-ID: $BMM_CLIENT_ID" \
-  -H "X-BMM-API-Key: $BMM_API_KEY"
-
-curl "$BMM_ORIGIN/api/connect/v1/me/support" \
-  -H "Authorization: Bearer $BMM_DEMO_TOKEN" \
-  -H "X-BMM-Client-ID: $BMM_CLIENT_ID" \
-  -H "X-BMM-API-Key: $BMM_API_KEY"
-```
-
-The sample profile has ID and username `demo_creator`, display name `Demo Creator`, an empty image, `earnings_shared: true`, and `profile_url: null` / `support_url: null`. Fictional creators have no live profile or payment destination.
-
-The earnings response is always:
-
-```json
-{"support":[{"currency":"NGN","settled_earnings_minor":1250000,"verified_payment_count":25},{"currency":"USD","settled_earnings_minor":4500,"verified_payment_count":9}]}
-```
-
-These are fictional values (₦12,500 and $45), stored separately from all real earnings and payment records. There is no underlying creator, contribution, balance or withdrawal. API responses use the normal profile and support shapes so the same display code works for real connections. Identify the demo from the token you generated and the `demo_creator` ID; do not present this as real income.
-
-Both credentials must stay server-side. The token belongs only to the approved application and its environment. Wrong API keys, another application's credentials, expired/revoked tokens and suspended applications are rejected. API key rotation requires using the new key. Sample data access does not exercise signup, consent, OAuth code exchange, refresh, real attribution or settlement. Test authentication and consent through your own integration or the optional Next.js example; set `BMM_DEMO_TOKEN` in the Next.js starter to enable its separate optional sample-data preview. Connect BMM remains the main flow. No refresh token is issued.
-
-New attributed profile URLs use `?bmm-partner=<opaque-reference>`. This reference binds the creator and application; it is not a raw application ID. Use the returned `support_url` unchanged. Existing `?source=` links remain supported; `bmm-partner` takes precedence when both are present.
-
-### Getting the optional BMM_DEMO_TOKEN
-
-In **Developers**, select the approved, active application in Live or Sandbox, then choose **Sample data preview → Generate preview token**. Copy the result into the starter’s `BMM_DEMO_TOKEN` environment variable, or copy the starter configuration immediately after generation. Restart the starter after updating its environment. Use the same application's ID and API key.
-
-There is no supported terminal command to generate this credential locally: BMM must issue and register it. A random string will not authenticate. Tokens expire after seven days; generating a replacement invalidates the previous token. Leave the variable empty when you do not need the optional sample preview. Real hosted connections do not require it.
+Use Sandbox to test authentication and explicit consent. Local sample data only demonstrates the UI; it does not test API access, attribution or settlement. Connect BMM remains the main starter flow. Remove any old `BMM_DEMO_TOKEN` environment setting; the starter no longer reads it. Existing server-issued preview tokens retain their existing expiry/revocation behaviour for compatibility, but are not used by this preview.
 
 ## Update your website or callback
 
@@ -360,15 +330,15 @@ Approval updates the existing application, keeping that application’s ID and c
 
 ## Multiple applications, Live and Sandbox
 
-Use the **Live** and **Sandbox** tabs in Developers, then **Add application** for each game or website. Names must be unique within your account and environment. The same game can have separate Live and Sandbox applications. Each application is independently reviewed and has its own client ID, API key, callback list, sample-data token, creator approvals and earnings attribution. Rotating, suspending or revoking one application does not affect another.
+Use the **Live** and **Sandbox** tabs in Developers, then **Add application** for each game or website. Names must be unique within your account and environment. The same game can have separate Live and Sandbox applications. Each application is independently reviewed and has its own client ID, API key, callback list, creator approvals and earnings attribution. Rotating, suspending or revoking one application does not affect another.
 
 Register up to **10 exact callback URLs**, one per line. Live URLs require HTTPS. Sandbox additionally allows HTTP on `localhost` and `127.0.0.1`. Wildcards, URL fragments, embedded credentials and duplicate callbacks are rejected. Choose one approved callback in the copyable starter configuration; authorization requests must match it exactly. Callback changes use the existing admin review workflow.
 
-Both tabs use the displayed BMM origin. The client ID determines the Connect environment; do not add an environment override to API requests. Approval and token exchange work for both environments on the same deployment. Creators see the environment during consent and can revoke either environment in Developers → Connected apps.
+Both tabs use the displayed BMM origin. The client ID determines the Connect environment; do not add an environment override to API requests. Approval and token exchange work for both environments on the same deployment. Creators see the environment during consent and can revoke either environment in Developers (Connected badge).
 
 The real creator response includes `environment: "live"` or `"sandbox"`. Earnings queries return only payments attributed to that exact application and environment, never another game's or environment's records. `profile_url` and `support_url` are `null` when the connection environment does not match the deployment's payment environment. In particular, Sandbox applications on a live-payment deployment cannot open live checkout, even if someone constructs a URL using their attribution reference. Sandbox connection testing is available immediately after approval; simulated payments still require a deployment configured with Bachs sandbox credentials. Empty sandbox earnings are not populated with fictional payment records.
 
-**Sample data preview** is optional and available for each approved application in either tab. It returns fixed fictional values and has no profile/payment destination. It is separate from a Sandbox creator connection. The starter's `BMM_DEMO_TOKEN` name is retained for compatibility; setting it only enables the optional preview page.
+**Sample data preview** is a local starter option, separate from Live and Sandbox connections. It needs no credentials and has no profile or payment destination.
 
 ## Archive an application
 

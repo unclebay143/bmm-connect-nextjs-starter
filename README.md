@@ -23,31 +23,19 @@ cd bmm-connect-nextjs-starter
 2. Download and extract the starter, or clone it as shown above. Copy the approved environment configuration from Developers into `.env.local`, replacing the API-key placeholder. There is no need to ask BMM for a separate sandbox origin.
 3. With Node.js 22.13 or later, run `npm install` and `npm run dev`. Open `http://localhost:3090` (use the exact host you registered).
 4. Click **Connect BMM**, sign in/register on BMM and choose permissions. Return to your connected profile. Click **Buy me a malt** to open a new tab with the notice, then continue to the attributed BMM support page in that tab. The original game/platform tab stays open; checkout keeps its existing BMM return flow.
-5. Disconnect here or in BMM → Developers → Connected apps. Later reads stop working immediately after revocation.
+5. Disconnect here or in BMM → Developers (Connected badge). Later reads stop working immediately after revocation.
 
-`BMM_ORIGIN`, `BMM_CLIENT_ID`, `BMM_API_KEY`, `APP_ORIGIN` and `BMM_REDIRECT_URI` are required. `BMM_DEMO_TOKEN` is optional and enables only Sample data preview. All secrets are server-only; never use `NEXT_PUBLIC_`.
+`BMM_ORIGIN`, `BMM_CLIENT_ID`, `BMM_API_KEY`, `APP_ORIGIN` and `BMM_REDIRECT_URI` are required. All secrets are server-only; never use `NEXT_PUBLIC_`.
 
-## Optional: get BMM_DEMO_TOKEN
+## Optional: local sample data
 
-This token is issued by BMM, not generated with a terminal command. Random strings from `openssl` or `crypto.randomBytes` will not work because BMM must register the token against your approved application.
+Run `npm install` and `npm run dev`, then open `http://localhost:3090/preview` or choose **Sample data preview** on the homepage. The preview works without `.env.local`, application approval, an API key or a token. Real connections still require the configuration above.
 
-1. Open **BMM → Developers** and select the correct Live or Sandbox application.
-2. Once the application is approved and active, find **Sample data preview** and click **Generate preview token**.
-3. Copy the displayed token into `.env.local`:
-
-```env
-BMM_DEMO_TOKEN=paste-the-preview-token-issued-by-BMM
-```
-
-You can also copy **Next.js starter configuration** immediately after generation; it includes the new token. Use the application ID and API key from that same application.
-
-4. Restart the local starter with `npm run dev`, or update your hosted server environment and restart/redeploy it as your host requires. Open **Preview sample data** on the starter homepage.
-
-The token expires after seven days. Generating another replaces the previous token; **Revoke preview token** disables it immediately. Keep it server-side. Leave `BMM_DEMO_TOKEN` empty if you only need the real Connect BMM flow—sample data is optional and never enables payments.
+Edit `lib/sample-data.mjs` to try different fictional profiles and earnings. This page makes no BMM API requests, changes no connection records and has no payment link. It does not test authentication, consent, attribution or settlement; use Sandbox for the real connection flow. Any old `BMM_DEMO_TOKEN` setting can be removed.
 
 ## Connect your own user session
 
-The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Developers → Connected apps.
+The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Developers (Connected badge).
 
 Replace `getPartnerUserId` with your platform's existing authenticated session:
 
