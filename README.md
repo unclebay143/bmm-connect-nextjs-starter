@@ -4,7 +4,7 @@ Connect a creator's BMM account to your platform, display their attributed suppo
 
 **Next.js is an example, not a BMM Connect requirement.** BMM Connect is a platform-agnostic HTTP API that you can call from PHP, Python, Go, Node.js or another backend. Use `API.md` to integrate with your existing stack. The Node.js/Next.js requirements below apply only to this runnable example; the core JavaScript SDK also works without the Next.js adapter.
 
-The starter uses BMM-hosted connections. **No database, encryption key, access-token storage or refresh-token handling is required.** It includes the local, unpublished SDK in `vendor/connect`; `npm install` installs it from there.
+The starter uses BMM-hosted connections. **No database, encryption key, access-token storage or refresh-token handling is required.** It installs the published [`buymeamalt`](https://www.npmjs.com/package/buymeamalt) SDK from npm.
 
 ## Get the starter
 
@@ -15,7 +15,7 @@ git clone https://github.com/unclebay143/bmm-connect-nextjs-starter.git
 cd bmm-connect-nextjs-starter
 ```
 
-**The repository is private for now.** Authenticate Git with a GitHub account that has repository access. BMM developer approval does not automatically grant GitHub access. If your account has not been granted access, use the dashboard download instead. Both options include the SDK source and the runnable example; no npm publication is required.
+**The repository is private for now.** Authenticate Git with a GitHub account that has repository access. BMM developer approval does not automatically grant GitHub access. If your account has not been granted access, use the dashboard download instead. Both options provide the same runnable example and install the SDK from npm.
 
 ## Run locally
 
