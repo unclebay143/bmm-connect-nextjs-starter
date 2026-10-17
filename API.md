@@ -31,7 +31,7 @@ Creators can disconnect at any time, either on your platform or in BMM → Share
 
 1. Open **Developers** on Buy Me a Malt and request access with your website, purpose and exact callback URLs. Live applications require HTTPS; applications in the Sandbox tab also accept localhost HTTP.
 2. Once approved, generate your API key and copy **Next.js starter configuration** into `.env.local`. Use your approved callback and matching app origin. No BMM token database or encryption key is required.
-3. Download and extract the starter, or clone the private GitHub repository below. Run `npm install` and `npm run dev`, serving it at the registered origin.
+3. Download and extract the starter, or clone the GitHub repository below. Run `npm install` and `npm run dev`, serving it at the registered origin.
 4. Click **Connect BMM**, authenticate and approve access, then return to your connected creator profile.
 5. Click **Buy me a malt**. The example opens the support flow in a new tab, keeping the original game/platform tab open. Continue to BMM within that new tab; no custom post-payment return URL is required. A notice explains that you will open the live BMM profile and that successfully verified payments through its link are attributed to your application. The support belongs to the creator.
 
@@ -43,7 +43,7 @@ git clone https://github.com/unclebay143/bmm-connect-nextjs-starter.git
 cd bmm-connect-nextjs-starter
 ```
 
-The repository is private while we finish the integration. Your GitHub account needs repository access; BMM application approval alone does not grant that access. Use the dashboard download if you do not have GitHub access. Next.js remains an optional example, not an API requirement.
+Next.js is an optional example, not an API requirement. Download or clone the starter to follow along.
 
 Use Sandbox to test the complete account connection and consent flow.
 

@@ -15,7 +15,7 @@ git clone https://github.com/unclebay143/bmm-connect-nextjs-starter.git
 cd bmm-connect-nextjs-starter
 ```
 
-**The repository is private for now.** Authenticate Git with a GitHub account that has repository access. BMM developer approval does not automatically grant GitHub access. If your account has not been granted access, use the dashboard download instead. Both options provide the same runnable example and install the SDK from npm.
+Both options provide the same runnable example and install the SDK from npm.
 
 ## Run locally
 
