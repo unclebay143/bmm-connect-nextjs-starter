@@ -1,35 +1,34 @@
 const money = {
-  NGN: new Intl.NumberFormat("en", { style: "currency", currency: "NGN" }),
+  NGN: new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    currencyDisplay: "narrowSymbol",
+  }),
   USD: new Intl.NumberFormat("en", { style: "currency", currency: "USD" }),
 };
 export default function Earnings({ support }) {
+  if (!support) return null;
   return (
-    <section>
-      <h2>Support through this app</h2>
+    <div className="connection-earnings">
+      <h3>Support through this app</h3>
       <p className="hint">
         Settled earnings, after fees and refunds. Not a withdrawable balance.
       </p>
-      {support ? (
-        <div className="currencies">
-          {support.map((row) => (
-            <div key={row.currency}>
-              <p>{row.currency}</p>
-              <strong>
-                {money[row.currency]?.format(row.settled_earnings_minor / 100)}
-              </strong>
-              <p className="hint">
-                {row.verified_payment_count} verified{" "}
-                {row.verified_payment_count === 1 ? "payment" : "payments"}
-              </p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>
-          Earnings are private. Disconnect and reconnect to change your sharing
-          choice.
-        </p>
-      )}
-    </section>
+
+      <div className="currencies">
+        {support.map((row) => (
+          <div key={row.currency}>
+            <p>{row.currency}</p>
+            <strong>
+              {money[row.currency]?.format(row.settled_earnings_minor / 100)}
+            </strong>
+            <p className="hint">
+              {row.verified_payment_count} verified{" "}
+              {row.verified_payment_count === 1 ? "payment" : "payments"}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

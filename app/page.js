@@ -30,11 +30,11 @@ export default async function Page({ searchParams }) {
   const notice = problem || messages[(await searchParams).status];
   return (
     <main>
-      <p className="eyebrow">BMM Connect · Example</p>
+      <p className="eyebrow">BMM Connect</p>
       <h1>{data ? "You’re connected." : "Good work deserves a malt."}</h1>
       <p className="intro">
         {data
-          ? "Your support link is ready to share."
+          ? "Your Buy Me a Malt page is connected to this platform."
           : "Connect BMM to receive support from your community."}
       </p>
       {notice && (
@@ -43,37 +43,51 @@ export default async function Page({ searchParams }) {
         </p>
       )}
       {data ? (
-        <>
-          <section>
-            <span className="badge">{data.creator.environment || "Live"}</span>
-            <h2>{data.creator.display_name || data.creator.username}</h2>
-            <p>@{data.creator.username}</p>
-            <div className="actions">
-              {data.creator.support_url && (
-                <Link
-                  className="button"
-                  href="/support"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Buy me a malt (opens in a new tab)"
-                >
-                  Buy me a malt ↗
-                </Link>
-              )}
-              <form action="/api/bmm/disconnect" method="post">
-                <button className="secondary" type="submit">
-                  Disconnect BMM
-                </button>
-              </form>
+        <section className="connection-card">
+          <div className="connection-heading">
+            <div className="creator-identity">
+              <span className="creator-avatar" aria-hidden="true">
+                {(data.creator.display_name || data.creator.username)
+                  .slice(0, 1)
+                  .toUpperCase()}
+              </span>
+              <div>
+                <h2>{data.creator.display_name || data.creator.username}</h2>
+                <p className="hint">@{data.creator.username}</p>
+              </div>
             </div>
-            <p className="hint">
-              {data.creator.support_url
-                ? "Opens in a new tab. Support is attributed to this application."
-                : "Connected for testing. A payment link isn’t available in this environment."}
-            </p>
-          </section>
+            <div className="connection-badges">
+              <span className="badge">Connected</span>
+              {data.creator.environment === "sandbox" && (
+                <span className="badge sandbox-badge">Sandbox</span>
+              )}
+            </div>
+          </div>
+          <div className="actions">
+            {data.creator.support_url && (
+              <Link
+                className="button"
+                href="/support"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Buy me a malt (opens in a new tab)"
+              >
+                Buy me a malt ↗
+              </Link>
+            )}
+            <form action="/api/bmm/disconnect" method="post">
+              <button className="secondary" type="submit">
+                Disconnect BMM
+              </button>
+            </form>
+          </div>
+          <p className="hint">
+            {data.creator.support_url
+              ? "Opens in a new tab. Support is attributed to this application."
+              : "Connected for testing. A payment link isn’t available in this environment."}
+          </p>
           <Earnings support={data.support} />
-        </>
+        </section>
       ) : (
         <section>
           <h2>Connect your BMM account</h2>
@@ -95,13 +109,6 @@ export default async function Page({ searchParams }) {
           </a>
         )}
       </footer>
-      <details className="example-note">
-        <summary>About this example</summary>
-        <p className="hint">
-          This demo uses a browser identity. Use your platform’s signed-in user
-          for production. See README.md for setup.
-        </p>
-      </details>
     </main>
   );
 }

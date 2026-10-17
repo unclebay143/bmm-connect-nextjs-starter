@@ -165,3 +165,88 @@ li {
 .example-note summary {
   cursor: pointer;
 }
+
+.connection-card {
+  background: #fffefa;
+  box-shadow: 5px 6px 0 #f0e7d7;
+}
+.connection-heading,
+.creator-identity,
+.connection-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.connection-heading {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.creator-identity {
+  min-width: 0;
+}
+.creator-identity h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.creator-identity p {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+.creator-avatar {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border: 1px solid #e8d2a9;
+  border-radius: 16px;
+  background: #fff3d6;
+  color: #75452d;
+  font-size: 22px;
+  font-weight: 700;
+}
+.connection-badges {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.connection-badges .badge {
+  float: none;
+  margin: 0;
+  border: 1px solid #c8dcc0;
+  color: #45603b;
+}
+.connection-badges .sandbox-badge {
+  background: #fff3d6;
+  border-color: #ead3a3;
+  color: #845d24;
+}
+.connection-card .button {
+  border-color: #493023;
+  background: #f6c65c;
+  box-shadow: 0 3px 0 #493023;
+}
+.connection-earnings {
+  border-top: 1px solid #e5dccb;
+  margin-top: 26px;
+  padding-top: 24px;
+}
+.connection-earnings h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+.connection-earnings .currencies {
+  margin-top: 20px;
+}
+.connection-earnings .currencies > div {
+  border: 0;
+  background: #f8f3e9;
+  border-radius: 14px;
+  padding: 16px;
+}
+.connection-earnings .currencies p {
+  margin: 0 0 8px;
+}
+.connection-earnings .currencies .hint {
+  margin: 8px 0 0;
+}
