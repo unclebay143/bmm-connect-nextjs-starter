@@ -101,7 +101,7 @@ export default async function Page({ searchParams }) {
       <footer className="example-footer">
         {bmmOrigin && (
           <a
-            href={`${bmmOrigin}/dashboard/developers?view=connections`}
+            href={`${bmmOrigin}/dashboard/share?tab=connected-apps`}
             target="_blank"
             rel="noopener noreferrer"
           >

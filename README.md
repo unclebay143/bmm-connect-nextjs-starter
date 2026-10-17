@@ -68,13 +68,13 @@ Open [http://localhost:3090](http://localhost:3090) using the exact host registe
 2. Sign in or register on BMM, then approve access and choose whether to share earnings.
 3. Return to the starter to see the connected profile.
 4. Click **Buy me a malt** when a support link is available. It opens the support notice and attributed BMM profile in a new tab, keeping your platform open.
-5. Disconnect in the starter or in **BMM → Developers**. Further authorised reads stop immediately.
+5. Disconnect in the starter or in **BMM → Share → Connected apps**. Further authorised reads stop immediately.
 
 The starter uses real connections only. Test with a Sandbox application; it does not include a fictional preview page.
 
 ## Connect your own user session
 
-The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Developers (Connected badge).
+The standalone example uses a signed HttpOnly browser identity in `lib/session.mjs` so you can try the complete journey without adding a login system. It is **not a production login**: another browser gets a different demo identity, clearing cookies loses the identity, and key rotation invalidates this demonstration identity. Revoke orphaned demo connections in BMM → Share → Connected apps.
 
 Replace `getPartnerUserId` with your platform's existing authenticated session:
 
