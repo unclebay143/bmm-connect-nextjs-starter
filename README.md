@@ -67,7 +67,7 @@ Open [http://localhost:3090](http://localhost:3090) using the exact host registe
 1. Click **Connect BMM**.
 2. Sign in or register on BMM, then approve access and choose whether to share earnings.
 3. Return to the starter to see the connected profile.
-4. Click **Buy me a malt** when a support link is available. It opens the support notice and attributed BMM profile in a new tab, keeping your platform open.
+4. Click **Buy me a malt** when a support link is available. It opens the attributed BMM profile directly in a new tab, keeping your platform open.
 5. Disconnect in the starter or in **BMM → Share → Connected apps**. Further authorised reads stop immediately.
 
 The starter uses real connections only. Test with a Sandbox application; it does not include a fictional preview page.

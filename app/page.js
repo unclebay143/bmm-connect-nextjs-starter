@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { overview } from "../lib/bmm.mjs";
 import { config } from "../lib/config.mjs";
 import Earnings from "./earnings";
@@ -65,15 +64,15 @@ export default async function Page({ searchParams }) {
           </div>
           <div className="actions">
             {data.creator.support_url && (
-              <Link
+              <a
                 className="button"
-                href="/support"
+                href={data.creator.support_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Buy me a malt (opens in a new tab)"
               >
                 Buy me a malt ↗
-              </Link>
+              </a>
             )}
             <form action="/api/bmm/disconnect" method="post">
               <button className="secondary" type="submit">
@@ -83,7 +82,7 @@ export default async function Page({ searchParams }) {
           </div>
           <p className="hint">
             {data.creator.support_url
-              ? "Opens in a new tab. Support is attributed to this application."
+              ? "Opens your BMM page in a new tab. Support is attributed to this app."
               : "Connected for testing. A payment link isn’t available in this environment."}
           </p>
           <Earnings support={data.support} />

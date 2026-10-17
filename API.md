@@ -33,7 +33,7 @@ Creators can disconnect at any time, either on your platform or in BMM → Share
 2. Once approved, generate your API key and copy **Next.js starter configuration** into `.env.local`. Use your approved callback and matching app origin. No BMM token database or encryption key is required.
 3. Download and extract the starter, or clone the GitHub repository below. Run `npm install` and `npm run dev`, serving it at the registered origin.
 4. Click **Connect BMM**, authenticate and approve access, then return to your connected creator profile.
-5. Click **Buy me a malt**. The example opens the support flow in a new tab, keeping the original game/platform tab open. Continue to BMM within that new tab; no custom post-payment return URL is required. A notice explains that you will open the live BMM profile and that successfully verified payments through its link are attributed to your application. The support belongs to the creator.
+5. Click **Buy me a malt**. The example opens the returned BMM support URL directly in a new tab, keeping the original game/platform tab open. Verified payments through that link are attributed to your application, and the creator receives the support. No intermediate page or custom post-payment return URL is required.
 
 
 The [Next.js starter repository](https://github.com/unclebay143/bmm-connect-nextjs-starter) provides the same example as the dashboard download:
