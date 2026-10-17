@@ -305,7 +305,7 @@ Read responses must not be publicly cached. Keep credentials out of URLs, browse
 
 ## Operator setup and validation
 
-Apply migrations through `0041_marvelous_talon.sql`, set `BMM_CONNECT_ENABLED=true`, and use a stable `BETTER_AUTH_SECRET`. Production requires HTTPS. New partner access should use the Developers request/approval dashboard. The legacy admin-only `/api/admin/connect` management API remains available for manually provisioned clients; it is not a public registration endpoint.
+Apply all committed migrations and use a stable `BETTER_AUTH_SECRET`. BMM Connect is available to all signed-in users; applications still require admin approval. Production requires HTTPS. New partner access should use the Developers request/approval dashboard. The legacy admin-only `/api/admin/connect` management API remains available for manually provisioned clients; it is not a public registration endpoint.
 
 Maintainers can follow `docs/bmm-connect-testing.md` for exact local setup commands.
 
